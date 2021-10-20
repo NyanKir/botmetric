@@ -144,6 +144,7 @@ button {
     width: 100%;
     background-color: var(--white);
     border-radius: 34px;
+    align-items: stretch;
 }
 
 .search_btn {
