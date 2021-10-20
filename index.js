@@ -1,5 +1,6 @@
 let json;
-
+let timeout=null
+const time=1500
 
 const params = {
     keyword: '',

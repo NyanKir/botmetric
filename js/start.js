@@ -1,7 +1,7 @@
 function render(json, rerender = false) {
     let {main, keyword, list, mention} = json;
+    console.log(json)
     const lang = {...langInit[main.lang]};
-    console.log(main)
     let all = []
 
     Object.keys(list).forEach((key) => {
@@ -58,7 +58,7 @@ function render(json, rerender = false) {
                                 </linearGradient>
                             </defs>
                         </svg>
-                        <span>${main.link_hash_tg ? 'media_scan_bot' : 'Авторизуйтесь'}</span>
+                        <span>media_scan_bot</span>
                     </div>
     `
     Mention7Chart.innerHTML = ''
@@ -92,8 +92,8 @@ function render(json, rerender = false) {
 
         renderCheckboxes(Checkboxes, json.settings.regions, 'Страны', lang, 'regions')
         renderCheckboxes(Checkboxes, json.settings.sources, 'Ресурсы', lang, 'sources')
-        renderMobileCheckboxes(MobileFilterBlogBtns, json.settings.regions, 'Страны', lang, 'regions')
         renderMobileCheckboxes(MobileFilterBlogBtns, json.settings.sources, 'Ресурсы', lang, 'sources')
+        renderMobileCheckboxes(MobileFilterBlogBtns, json.settings.regions, 'Страны', lang, 'regions')
         const checkboxses = document.querySelectorAll('.switchevent')
         for (let i = 0; i < checkboxses.length; i++) {
             checkboxses[i].addEventListener('change', function (e) {
@@ -188,7 +188,7 @@ function render(json, rerender = false) {
         `;
         });
     } else {
-        MentionResource.parentElement.remove();
+        MentionResource.innerHTML='';
     }
 
 
@@ -407,12 +407,17 @@ function renderMobileCheckboxes(node, settings, title, lang, what) {
                 `
     const keys = json.settings['dict_' + what]
 
+    let check=false
+    if(what==="regions" && !Object.keys(settings).length){
+        check=true
+        params['regions']=params['dict_regions']
+    }
     let checkbox = ``
     keys.forEach((key) => {
         checkbox += `
                     <div class="group_switch">
                         <label class=" switch">
-                            <input class="switchevent" type="checkbox" value="${key}" ${(settings[key]) ? `checked` : ''} name="${what}">
+                            <input class="switchevent" type="checkbox" value="${key}" ${check?'checked':(settings[key]) ? `checked` : ''} name="${what}">
                             <span class="slider round"></span>
                         </label>
                         <p>${lang[key]}</p>
@@ -455,31 +460,36 @@ function renderCheckboxes(node, settings, title, lang, what) {
 
 }
 
+
 function CheckboxHandler(e, self) {
     const type = e.target.name
     const dictType = 'dict_' + type
 
+    clearTimeout(timeout)
     if (e.target.checked) {
         params[type] = [...params[type], e.target.value]
 
     } else {
         params[type] = params[type].filter((el) => el !== e.target.value)
-        // if(!params[type].length){
-        //     params[type] = [...params[dictType]]
-        //     console.log(params[type])
-        //     logicCheckboxes(self, 'allOn', type)
-        //     fetching().then(data => render(data))
-        //     return
-        // }
+        if(!params[type].length){
+            params[type] = [...params[dictType]]
+            logicCheckboxes(self, 'allOn', type)
+            timeout=setTimeout(()=>{
+                fetching().then(data => render(data))
+            },time)
+            return
+        }
     }
-    console.log(params[type])
     logicCheckboxes(self, type, type)
-    fetching().then(data => render(data))
+
+    timeout=setTimeout(()=>{
+        fetching().then(data => render(data))
+    },time)
+
 }
 
 function logicCheckboxes(node, type, value) {
     //вкл кнопки ВСЕ
-    console.log(type)
     if (type === 'allOn') {
         const all = node.parentElement.parentElement.parentElement.querySelectorAll('input')
         for (let j = 0; j < all.length; j++) {
