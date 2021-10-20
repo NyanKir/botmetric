@@ -263,13 +263,13 @@ function render(json, rerender = false) {
 
             const postTitle = document.createElement('span');
             postTitle.classList.add('panels_topic');
-            postTitle.innerHTML += `${type === 'tg_gr' ? lang.text : lang.topic}: <b>${truncate(obj.title, 180)}</b>`;
+            postTitle.innerHTML += `${type === 'tg_gr' ? lang.text : lang.topic}: <span>${truncate(obj.title, 180)}</span>`;
             postTitle.setAttribute('data-value', obj.title);
 
             const postText = document.createElement('span');
             postText.classList.add('panels_topic');
             postText.classList.add('panels_topic-text');
-            postText.innerHTML += `Из текста: ${obj.context.replaceAll('[…]', '"')}`;
+            postText.innerHTML += `Из текста: <span>${obj.context.replaceAll('[…]', '"')}</span>`;
             const postLink = document.createElement('a');
             postLink.classList.add('panels_link');
             postLink.textContent = obj.link;
@@ -342,9 +342,9 @@ function render(json, rerender = false) {
                 const textObj = this.parentElement.firstElementChild;
                 this.classList.toggle("active");
                 if (this.classList.contains("active")) {
-                    textObj.innerHTML = `${textObj.innerHTML.slice(0, 6)}<b>${textObj.dataset.value}</b>`;
+                    textObj.innerHTML = `${textObj.innerHTML.slice(0, 6)}<span>${textObj.dataset.value}</span>`;
                 } else {
-                    textObj.innerHTML = `${textObj.innerHTML.slice(0, 6)} <b>${truncate(textObj.dataset.value, 180)}</b>`;
+                    textObj.innerHTML = `${textObj.innerHTML.slice(0, 6)} <span>${truncate(textObj.dataset.value, 180)}</span>`;
                 }
 
             });

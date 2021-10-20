@@ -156,6 +156,9 @@ button {
     min-width: 200px;
     font-weight: 700;
     transition: .3s all;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .search_btn:hover {
@@ -1211,9 +1214,14 @@ input:checked + .slider:before {
         font-size: 12px;
     }
 
-    /*.panels_topic-text {*/
-    /*    display: none;*/
-    /*}*/
+    .panels_topic-text {
+        font-weight: 600;
+    }
+    .panels_topic-text span{
+        font-weight: 400;
+        font-style: italic;
+    }
+
 }
 
 @media screen  and (max-width: 900px) {
@@ -1273,6 +1281,16 @@ input:checked + .slider:before {
 }
 
 @media screen and (max-width: 600px) {
+    .mention-24_td:last-child{
+        color: black;
+    }
+
+    .panels_topic{
+        font-weight: 600;
+    }
+    .panels_topic span{
+        font-weight: 400;
+    }
     .loader svg{
         width: 15px;
         height: 15px;
@@ -1373,15 +1391,15 @@ input:checked + .slider:before {
     }
 
     .mention_count {
-        font-size: 4px;
+        font-size: 9px;
     }
 
     .mention_chart {
-        height: 83px;
+        height: 130px;
     }
 
     .mention_wrapper {
-        width: 11px;
+        /*width: 11px;*/
         min-width: auto;
         margin: 0 1px;
     }
@@ -1396,7 +1414,7 @@ input:checked + .slider:before {
     }
 
     .mention_chart.margin-15 {
-        justify-content: center;
+        /*justify-content: center;*/
     }
 
     .mention24_space {
@@ -1408,7 +1426,7 @@ input:checked + .slider:before {
     }
 
     .mention-24_td, .mention-24_td .header_links {
-        font-size: 10px;
+        font-size: 13px;
     }
 }
 
