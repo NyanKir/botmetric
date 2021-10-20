@@ -149,7 +149,7 @@ button {
 .search_btn {
     border-radius: 34px;
     border: none;
-    height: inherit;
+    /*height: inherit;*/
     background: linear-gradient(180deg, #FAFF01 0%, #33FF01 100%);
     color: var(--white);
     font-size: 40px;

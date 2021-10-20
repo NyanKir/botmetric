@@ -188,7 +188,7 @@ function render(json, rerender = false) {
         `;
         });
     } else {
-        MentionResource.innerHTML='';
+        MentionResource.innerHTML = '';
     }
 
 
@@ -267,9 +267,12 @@ function render(json, rerender = false) {
             postTitle.setAttribute('data-value', obj.title);
 
             const postText = document.createElement('span');
-            postText.classList.add('panels_topic');
-            postText.classList.add('panels_topic-text');
-            postText.innerHTML += `Из текста: <span>${obj.context.replaceAll('[…]', '"')}</span>`;
+            if (obj.context) {
+                postText.classList.add('panels_topic');
+                postText.classList.add('panels_topic-text');
+                postText.innerHTML += `Из текста: <span>${obj.context.replaceAll('[…]', '"')}</span>`;
+            }
+
             const postLink = document.createElement('a');
             postLink.classList.add('panels_link');
             postLink.textContent = obj.link;
@@ -304,8 +307,9 @@ function render(json, rerender = false) {
             } else {
                 post.appendChild(postLink);
             }
-
-            post.appendChild(postText);
+            if (obj.context) {
+                post.appendChild(postText);
+            }
             post.appendChild(postDate);
             htmlObj.appendChild(post);
         });
@@ -407,17 +411,17 @@ function renderMobileCheckboxes(node, settings, title, lang, what) {
                 `
     const keys = json.settings['dict_' + what]
 
-    let check=false
-    if(what==="regions" && !Object.keys(settings).length){
-        check=true
-        params['regions']=params['dict_regions']
+    let check = false
+    if (what === "regions" && !Object.keys(settings).length) {
+        check = true
+        params['regions'] = params['dict_regions']
     }
     let checkbox = ``
     keys.forEach((key) => {
         checkbox += `
                     <div class="group_switch">
                         <label class=" switch">
-                            <input class="switchevent" type="checkbox" value="${key}" ${check?'checked':(settings[key]) ? `checked` : ''} name="${what}">
+                            <input class="switchevent" type="checkbox" value="${key}" ${check ? 'checked' : (settings[key]) ? `checked` : ''} name="${what}">
                             <span class="slider round"></span>
                         </label>
                         <p>${lang[key]}</p>
@@ -437,17 +441,17 @@ function renderCheckboxes(node, settings, title, lang, what) {
                     <p class="group_title">${title}</p>
                 `
     const keys = json.settings['dict_' + what]
-    let check=false
-    if(what==="regions" && !Object.keys(settings).length){
-        check=true
-        params['regions']=params['dict_regions']
+    let check = false
+    if (what === "regions" && !Object.keys(settings).length) {
+        check = true
+        params['regions'] = params['dict_regions']
     }
     let checkbox = ``
     keys.forEach((key) => {
         checkbox += `
                     <div class="group_switch">
                         <label class=" switch">
-                            <input class="switchevent" type="checkbox" value="${key}" ${check?'checked':(settings[key]) ? `checked` : ''} name="${what}">
+                            <input class="switchevent" type="checkbox" value="${key}" ${check ? 'checked' : (settings[key]) ? `checked` : ''} name="${what}">
                             <span class="slider round"></span>
                         </label>
                         <p>${lang[key]}</p>
@@ -471,20 +475,20 @@ function CheckboxHandler(e, self) {
 
     } else {
         params[type] = params[type].filter((el) => el !== e.target.value)
-        if(!params[type].length){
+        if (!params[type].length) {
             params[type] = [...params[dictType]]
             logicCheckboxes(self, 'allOn', type)
-            timeout=setTimeout(()=>{
+            timeout = setTimeout(() => {
                 fetching().then(data => render(data))
-            },time)
+            }, time)
             return
         }
     }
     logicCheckboxes(self, type, type)
 
-    timeout=setTimeout(()=>{
+    timeout = setTimeout(() => {
         fetching().then(data => render(data))
-    },time)
+    }, time)
 
 }
 
@@ -618,7 +622,7 @@ function renderMention(node, mention, title) {
         const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
         mention.forEach((hour, index, arr) => {
             let progress = +(((100 * hour) / max).toFixed(0))
-            if (progress < 40 && progress!==0) {
+            if (progress < 40 && progress !== 0) {
                 progress += 10
             }
 
@@ -638,7 +642,7 @@ function renderMention(node, mention, title) {
     }
 }
 
-function scanDataBtnHandler(e, btn,input) {
+function scanDataBtnHandler(e, btn, input) {
     btn.disabled = true
     document.title = 'Loading...'
     fetching(input.value).then((data) => render(data)).then(() => {
@@ -649,10 +653,10 @@ function scanDataBtnHandler(e, btn,input) {
 }
 
 //Кнопки пойска
-SearchButton.addEventListener('click', (e) => scanDataBtnHandler(e, SearchButton,SearchInput))
-SearchButtonMobile.addEventListener('click', (e) => scanDataBtnHandler(e, SearchButtonMobile,SearchInputMobile))
-SearchInput.addEventListener('keydown',(event)=>{
-    if(event.key === 'Enter') {
+SearchButton.addEventListener('click', (e) => scanDataBtnHandler(e, SearchButton, SearchInput))
+SearchButtonMobile.addEventListener('click', (e) => scanDataBtnHandler(e, SearchButtonMobile, SearchInputMobile))
+SearchInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
         event.target.disabled = true
         SearchButton.disabled = true
 
