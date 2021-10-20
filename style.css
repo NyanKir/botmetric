@@ -1391,7 +1391,8 @@ input:checked + .slider:before {
     }
 
     .mention_count {
-        font-size: 9px;
+        color: black;
+        font-size:12px;
     }
 
     .mention_chart {

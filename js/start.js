@@ -618,7 +618,7 @@ function renderMention(node, mention, title) {
         const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
         mention.forEach((hour, index, arr) => {
             let progress = +(((100 * hour) / max).toFixed(0))
-            if (progress < 40) {
+            if (progress < 40 && progress!==0) {
                 progress += 10
             }
 
