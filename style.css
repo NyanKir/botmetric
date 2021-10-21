@@ -673,6 +673,8 @@ button {
     color: var(--link);
     font-size: 12px;
     text-decoration: underline;
+    margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .panels_read:after {
@@ -1377,6 +1379,7 @@ input:checked + .slider:before {
 
     .mention-resource_title {
         font-size: 12px;
+        min-width: 110px;
     }
 
     .mention-resource_count {

@@ -199,6 +199,21 @@ function render(json, rerender = false) {
         renderPosts(obj, list[type], InitialValues[type + 'count'], InitialValues[type + 'count'] + InitialValues.step, type);
         InitialValues[type + 'count'] += InitialValues.step;
         renderBtn(obj, type, true);
+
+        const reader = document.getElementsByClassName("panels_read");
+        // Читать еще...
+        for (let i = 0; i < reader.length; i++) {
+            reader[i].addEventListener("click", function () {
+                const textObj = this.parentElement.firstElementChild;
+                this.classList.toggle("active");
+                if (this.classList.contains("active")) {
+                    textObj.innerHTML = `${textObj.innerHTML.slice(0, 6)}<span>${textObj.dataset.value}</span>`;
+                } else {
+                    textObj.innerHTML = `${textObj.innerHTML.slice(0, 6)} <span>${truncate(textObj.dataset.value, 180)}</span>`;
+                }
+
+            });
+        }
     }
 
     function renderBtn(htmlObj, type, height) {
@@ -336,7 +351,6 @@ function render(json, rerender = false) {
             renderPosts(document.getElementById(key + "posts"), list[key], 0, (InitialValues[key + 'count'] - 5) + InitialValues.showposts, key);
             renderBtn(document.getElementById(key + "posts"), key);
         });
-
         // События для кнопки аккардиона
         const acc = document.getElementsByClassName("accordion");
         const reader = document.getElementsByClassName("panels_read");
@@ -464,7 +478,6 @@ function renderCheckboxes(node, settings, title, lang, what) {
 
 }
 
-
 function CheckboxHandler(e, self) {
     const type = e.target.name
     const dictType = 'dict_' + type
@@ -584,14 +597,14 @@ function renderTableDate(table, query, lang) {
                             const re = new RegExp(/(http(s)?:\/\/.)?(www\.)/g);
                             const res = re.test(row[key]);
                             if (res) {
-                                cellName.innerHTML = `<a href="${row[key]}" class="header_links" target="_blank">${row[key].trim()}</a>`;
+                                cellName.innerHTML = `<a href="${row[key]}" class="header_links" target="_blank">${truncate(row[key].trim(),15)}</a>`;
                                 return;
                             }
-                            cellName.innerHTML = `<a href="https://${row[key]}" class="header_links" target="_blank">${row[key].trim()}</a>`;
+                            cellName.innerHTML = `<a href="https://${row[key]}" class="header_links" target="_blank">${truncate(row[key].trim(),15)}</a>`;
                             return;
                         }
                     }
-                    cellName.textContent = row[key];
+                    cellName.textContent = truncate(row[key],15);
                 }
                 newRow.appendChild(cellName);
                 spacing.appendChild(cellEmpty);
@@ -646,7 +659,7 @@ function scanDataBtnHandler(e, btn, input) {
     btn.disabled = true
     document.title = 'Loading...'
     fetching(input.value).then((data) => render(data)).then(() => {
-        document.title = 'Document'
+        document.title = 'Dashboard Media Scan'
         btn.disabled = false
     })
     e.preventDefault()
