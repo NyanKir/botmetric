@@ -150,6 +150,7 @@ button {
 .search_btn {
     border-radius: 34px;
     border: none;
+    /*height: inherit;*/
     background: linear-gradient(180deg, #FAFF01 0%, #33FF01 100%);
     color: var(--white);
     font-size: 40px;
@@ -1228,7 +1229,7 @@ input:checked + .slider:before {
 
 @media screen  and (max-width: 900px) {
     .search_btn {
-        min-width: 100px;
+        min-width: 70px;
         font-size: 20px;
     }
 
@@ -1357,7 +1358,6 @@ input:checked + .slider:before {
     .search_btn {
         width: 50px;
         font-size: 12px;
-        height: 22px;
     }
 
     .keyword_count {
@@ -1379,7 +1379,6 @@ input:checked + .slider:before {
 
     .mention-resource_title {
         font-size: 12px;
-        min-width: 110px;
     }
 
     .mention-resource_count {
