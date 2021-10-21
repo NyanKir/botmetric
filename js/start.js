@@ -1,3 +1,4 @@
+
 function render(json, rerender = false) {
     let {main, keyword, list, mention} = json;
     console.log(json)
@@ -29,7 +30,7 @@ function render(json, rerender = false) {
     Keyword2.parentElement.innerHTML = lang.notice + "</br>" + Keyword2.outerHTML;
     Keyword.textContent = keyword;
     Keyword24.textContent = lang.keyword24;
-    keywordText.innerHTML = lang.keyword_text  + "</br>" +  Keyword.outerHTML;
+    keywordText.innerHTML = lang.keyword_text + "</br>" + Keyword.outerHTML;
     KeywordCount.innerHTML = lang.keyword_count;
     Keyword7.textContent = lang.keyword7d;
     MResources.textContent = lang.mresources;
@@ -37,6 +38,7 @@ function render(json, rerender = false) {
     M7Days.textContent = lang.mlastweek;
     MDay.textContent = lang.mday;
     MWeek.textContent = lang.mweek;
+    topMention.textContent = lang.topMention;
     AsideTLG.innerHTML = `
                     <p class="aside_tlg-title section_title">${lang.get_notices + ': ' + keyword}</p>
                     <a href="${main.link_hash_tg}" class="aside_tlg-btn" target="_blank">
@@ -80,6 +82,7 @@ function render(json, rerender = false) {
 
     renderTableDate(Mention24, 'top1', lang)
     renderTableDate(Mention7, 'top7', lang)
+    renderTableDate(MentionSwitcher, currentTable, lang, true)
 
 
     if (rerender) {
@@ -88,6 +91,45 @@ function render(json, rerender = false) {
             <span>ф и л ь т р</span>
         </div>
         `
+
+        Switcher.innerHTML = `
+                 <span class="swithcer-title ${currentTable === 'top1' ? 'current' : ''}" data-value="top1">24 часа</span>
+                    <label class="switch">
+                        <input type="checkbox" ${currentTable === 'top7' ? 'checked' : ''} id="switc">
+                        <span class="slider round"></span>
+                    </label>
+                <span  class="swithcer-title ${currentTable === 'top7' ? 'current' : ''}"  data-value="top7">7 дней</span>
+        `
+        const spans = document.querySelectorAll('.swithcer-title')
+        for (let i = 0; i < spans.length; i++) {
+            spans[i].addEventListener('click', function (e) {
+                currentTable = e.target.dataset.value
+                const swtic = document.getElementById('switc')
+                if (currentTable === 'top1') {
+                    swtic.checked=false
+                    swtic.parentElement.parentElement.lastChild.previousSibling.classList.remove('current')
+                    swtic.parentElement.parentElement.firstChild.nextSibling.classList.add('current')
+                }else{
+                    swtic.checked=true
+                    swtic.parentElement.parentElement.lastChild.previousSibling.classList.add('current')
+                    swtic.parentElement.parentElement.firstChild.nextSibling.classList.remove('current')
+                }
+
+                renderTableDate(MentionSwitcher, currentTable, lang, true)
+            })
+        }
+        document.getElementById('switc').addEventListener('change', (e) => {
+            if (e.target.checked) {
+                currentTable = 'top7'
+                e.target.parentElement.parentElement.lastChild.previousSibling.classList.add('current')
+                e.target.parentElement.parentElement.firstChild.nextSibling.classList.remove('current')
+            } else {
+                currentTable = 'top1'
+                e.target.parentElement.parentElement.lastChild.previousSibling.classList.remove('current')
+                e.target.parentElement.parentElement.firstChild.nextSibling.classList.add('current')
+            }
+            renderTableDate(MentionSwitcher, currentTable, lang, true)
+        })
         Checkboxes.innerHTML = ''
 
         renderCheckboxes(Checkboxes, json.settings.regions, 'Страны', lang, 'regions')
@@ -597,14 +639,14 @@ function renderTableDate(table, query, lang) {
                             const re = new RegExp(/(http(s)?:\/\/.)?(www\.)/g);
                             const res = re.test(row[key]);
                             if (res) {
-                                cellName.innerHTML = `<a href="${row[key]}" class="header_links" target="_blank">${truncate(row[key].trim(),15)}</a>`;
+                                cellName.innerHTML = `<a href="${row[key]}" class="header_links" target="_blank">${truncate(row[key].trim(), 15)}</a>`;
                                 return;
                             }
-                            cellName.innerHTML = `<a href="https://${row[key]}" class="header_links" target="_blank">${truncate(row[key].trim(),15)}</a>`;
+                            cellName.innerHTML = `<a href="https://${row[key]}" class="header_links" target="_blank">${truncate(row[key].trim(), 15)}</a>`;
                             return;
                         }
                     }
-                    cellName.textContent = truncate(row[key],15);
+                    cellName.textContent = truncate(row[key], 15);
                 }
                 newRow.appendChild(cellName);
                 spacing.appendChild(cellEmpty);

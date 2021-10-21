@@ -15,12 +15,15 @@ const M7Days = document.getElementById("mention7d");
 const MResources = document.getElementById("mentionResources");
 const MDay = document.getElementById("mention1Day");
 const MWeek = document.getElementById("mention7Day");
+const Switcher = document.getElementById("switcher");
+const topMention = document.getElementById("topMention");
 
 //Блоки
 const Mention = document.getElementById("mention");
 const Checkboxes = document.getElementById("checkboxes");
 const Mention7Chart = document.getElementById("mention7chart");
 const MentionResource = document.getElementById("mention_resource");
+const MentionSwitcher= document.getElementById("mentionSwitcher");
 const Mention24 = document.getElementById("mention24");
 const Mention7 = document.getElementById("mention7");
 const Notices = document.getElementById("notices");

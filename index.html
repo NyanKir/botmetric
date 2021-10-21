@@ -193,7 +193,7 @@
         </div>
         <div class="search">
             <p class="search_title">Dashboard</p>
-            <div  class="search_label">
+            <div class="search_label">
                 <div class="search_svg">
                     <svg width="34" height="36" viewBox="0 0 34 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15.6878 28.5C21.8999 28.5 26.9358 23.1274 26.9358 16.5C26.9358 9.87258 21.8999 4.5 15.6878 4.5C9.47572 4.5 4.43982 9.87258 4.43982 16.5C4.43982 23.1274 9.47572 28.5 15.6878 28.5Z"
@@ -215,7 +215,8 @@
                                 <circle cx="50" cy="50" fill="none" stroke="#1d0e0b" stroke-width="10" r="35"
                                         stroke-dasharray="164.93361431346415 56.97787143782138">
                                     <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite"
-                                                      dur="1s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+                                                      dur="1s" values="0 50 50;360 50 50"
+                                                      keyTimes="0;1"></animateTransform>
                                 </circle>
                             </svg>
                         </i>
@@ -230,7 +231,7 @@
         <aside class="aside">
             <div data-blink class="aside_section aside_tlg" id="aside_tlg">
             </div>
-            <div  data-blink class="aside_section aside_regions" id="checkboxes">
+            <div data-blink class="aside_section aside_regions" id="checkboxes">
 
             </div>
             <div data-blink class="aside_section blog" id="aside_blog">
@@ -241,7 +242,7 @@
             <section class="mobile-search section">
                 <div class="search">
                     <p class="search_title">Dashboard</p>
-                    <div  class="search_label">
+                    <div class="search_label">
                         <div class="search_svg">
                             <svg width="34" height="36" viewBox="0 0 34 36" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
@@ -260,11 +261,14 @@
                                     <?xml version="1.0" encoding="utf-8"?>
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                          style="margin: auto; display: block; shape-rendering: auto;"
-                                         width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                                         width="200px" height="200px" viewBox="0 0 100 100"
+                                         preserveAspectRatio="xMidYMid">
                                         <circle cx="50" cy="50" fill="none" stroke="#1d0e0b" stroke-width="10" r="35"
                                                 stroke-dasharray="164.93361431346415 56.97787143782138">
-                                            <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite"
-                                                              dur="1s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+                                            <animateTransform attributeName="transform" type="rotate"
+                                                              repeatCount="indefinite"
+                                                              dur="1s" values="0 50 50;360 50 50"
+                                                              keyTimes="0;1"></animateTransform>
                                         </circle>
                                     </svg>
                                 </i>
@@ -391,7 +395,19 @@
 
                 </div>
             </section>
-            <!--            Table-->
+
+            <!--Table Switcher PC-->
+            <section data-blink class="section resource-switcher">
+                <span class="section_title" id="topMention">
+                </span>
+                <div id="switcher" class="switcher-table">
+
+                </div>
+                <table id="mentionSwitcher" class="mention-24">
+
+                </table>
+            </section>
+            <!--Table Mobile-->
             <section data-blink class="section resource row-3 scroll">
                 <span class="section_title" id="mention7Day">
                 </span>
@@ -399,7 +415,7 @@
 
                 </table>
             </section>
-            <!--            Table 24-->
+            <!--Table 24 Mobile-->
             <section data-blink class="section resource scroll">
                 <span class="section_title" id="mention1Day">
                 </span>

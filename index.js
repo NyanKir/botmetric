@@ -1,6 +1,7 @@
 let json;
 let timeout=null
 const time=1500
+let currentTable = 'top1'
 
 const params = {
     keyword: '',
