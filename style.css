@@ -150,7 +150,6 @@ button {
 .search_btn {
     border-radius: 34px;
     border: none;
-    /*height: inherit;*/
     background: linear-gradient(180deg, #FAFF01 0%, #33FF01 100%);
     color: var(--white);
     font-size: 40px;
@@ -1357,7 +1356,7 @@ input:checked + .slider:before {
 
     .search_btn {
         width: 50px;
-        font-size: 12px;
+        font-size: 19px;
     }
 
     .keyword_count {
