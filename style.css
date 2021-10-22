@@ -879,17 +879,20 @@ button {
 
 
 .mobile-popup {
+    box-shadow:  0 -3px 5px 5px rgba(0, 0, 0, 0.36);
     width: 100%;
     background-color: var(--secondary);
     display: none;
     position: fixed;
-    bottom: -50px;
+    bottom: -65px;
     left: 0;
+    height: 65px;
     justify-content: space-between;
     padding: 5px 10px;
     box-sizing: border-box;
     transition: .3s;
     z-index: 9999;
+    border-radius: 10px 10px 0 0;
 }
 
 .mobile-popup > a {
@@ -905,20 +908,24 @@ button {
 }
 
 .mobile-popup span {
+    font-size: 20px;
     color: var(--white);
 }
 
 .mobile-popup button {
     width: 97px;
-    height: 24px;
-    font-size: 14px;
+    height: 35px;
+    font-size: 16px;
     border: none;
     outline: none;
     color: var(--white);
     border-radius: 100px;
     background: linear-gradient(180deg, #0096E0 0%, #59BCED 52.08%, #0096E0 98.44%);
 }
-
+.mobile-popup svg{
+    width: 32px;
+    height: 32px;
+}
 .panels.full {
     height: 100%;
     max-height: 100%;
@@ -1384,6 +1391,9 @@ input:checked + .slider:before {
 }
 
 @media screen and (max-width: 600px) {
+    .col-2 .mention_hour{
+        font-size: 14px;
+    }
     .search_label {
         height: 25px;
     }
