@@ -424,6 +424,7 @@ button {
 }
 
 .mention_chart {
+    background-color: red;
     margin-bottom: 10px;
     margin-top: 10px;
     display: flex;
