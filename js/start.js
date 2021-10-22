@@ -210,11 +210,12 @@ function render(json, rerender = false) {
     }, {value: tg_ch, name: 'tg_ch'}, {value: tg_gr, name: 'tg_gr'}]
         .sort((a, b) => b.value - a.value);
     if (!arrMentionSource.every(el => el.value === 0)) {
+        MentionResource.parentElement.classList.add('display-block')
+        MentionResource.parentElement.classList.remove('display-none')
 
         let max = Math.max(...arrMentionSource.map((el) => el.value));
         arrMentionSource.forEach((mention) => {
             if (!mention.value) {
-                // MentionResource.parentElement.classList.add('display-none')
                 return;
             }
             let progress = ((100 * mention.value) / max.toFixed(0));
@@ -235,6 +236,9 @@ function render(json, rerender = false) {
         });
     } else {
         MentionResource.innerHTML = '';
+        MentionResource.parentElement.classList.remove('display-block')
+        MentionResource.parentElement.classList.add('display-none')
+
     }
 
 
@@ -284,6 +288,7 @@ function render(json, rerender = false) {
     }
 
     function renderBlogBtns(node, list) {
+        console.log(list)
         const keys = Object.keys(list).filter((el) => list[el].length !== 0)
         const url = new URL(document.URL)
         const ks = Object.keys(list)
@@ -394,6 +399,7 @@ function render(json, rerender = false) {
     }
 
     function renderNews() {
+        console.log('rer')
         Notices.innerHTML = '';
         const url = new URL(document.URL)
         const ks = Object.keys(list)
@@ -409,10 +415,10 @@ function render(json, rerender = false) {
                 </div>
             `;
 
-            renderBlogBtns(AsideBlogBtns, list)
             renderPosts(document.getElementById(key + "posts"), list[key], 0, (InitialValues[key + 'count'] - 5) + InitialValues.showposts, key);
             renderBtn(document.getElementById(key + "posts"), key);
         });
+        renderBlogBtns(AsideBlogBtns, list)
         // События для кнопки аккардиона
         const acc = document.getElementsByClassName("accordion");
         const reader = document.getElementsByClassName("panels_read");
