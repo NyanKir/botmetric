@@ -1,4 +1,3 @@
-
 function render(json, rerender = false) {
     let {main, keyword, list, mention} = json;
     console.log(json)
@@ -19,8 +18,8 @@ function render(json, rerender = false) {
         setTimeout(() => {
             MobilePopup.classList.add('active')
         }, 1000)
-        MobilePopup.addEventListener(('click'),function () {
-            showPopup=false
+        MobilePopup.addEventListener(('click'), function () {
+            showPopup = false
             MobilePopup.remove()
         })
     }
@@ -110,11 +109,11 @@ function render(json, rerender = false) {
                 currentTable = e.target.dataset.value
                 const swtic = document.getElementById('switc')
                 if (currentTable === 'top1') {
-                    swtic.checked=false
+                    swtic.checked = false
                     swtic.parentElement.parentElement.lastChild.previousSibling.classList.remove('current')
                     swtic.parentElement.parentElement.firstChild.nextSibling.classList.add('current')
-                }else{
-                    swtic.checked=true
+                } else {
+                    swtic.checked = true
                     swtic.parentElement.parentElement.lastChild.previousSibling.classList.add('current')
                     swtic.parentElement.parentElement.firstChild.nextSibling.classList.remove('current')
                 }
@@ -309,8 +308,24 @@ function render(json, rerender = false) {
                 url.searchParams.set('posts', e.target.value)
                 // window.scrollTo({ top: Notices.offsetTop-90, behavior: 'smooth'});
                 window.history.replaceState({}, null, url.toString());
+                const intersectionObserver = new IntersectionObserver((entries) => {
+                    let [entry] = entries;
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            window.removeEventListener('scroll', (list) => ScrollHandler(Object.keys(list)))
+                            window.addEventListener('scroll', (list) => ScrollHandler(Object.keys(list)));
+                            renderNews()
+                        }, 300)
+                    }
+                });
+                intersectionObserver.observe(Mention);
+                window.scrollTo({
+                    top: Mention.offsetTop,
+                    behavior: 'smooth'
+                })
+                renderBlogBtns()
                 // setTimeout(()=>{
-                renderNews()
+                // renderNews()
                 // },700)
             })
         }
@@ -446,14 +461,32 @@ function render(json, rerender = false) {
         for (let i = 0; i < btns.length; i++) {
             btns[i].addEventListener('click', function (e) {
                 this.classList.add('active')
+
                 const url = new URL(document.URL)
+                const intersectionObserver = new IntersectionObserver((entries) => {
+                    let [entry] = entries;
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            window.removeEventListener('scroll', (list) => ScrollHandler(Object.keys(list)))
+                            window.addEventListener('scroll', (list) => ScrollHandler(Object.keys(list)));
+                            renderNews()
+                        }, 300)
+                    }
+                });
+                intersectionObserver.observe(Notices.parentElement.querySelector('.section_title'));
+
+                window.scrollTo({
+                    top: Notices.parentElement.querySelector('.section_title').offsetTop,
+                    behavior: 'smooth'
+                })
+
                 url.searchParams.set('posts', e.target.getAttribute('value'))
                 window.history.replaceState({}, null, url.toString());
                 renderMobileAsideBtns(node, list)
-                renderNews()
             })
         }
     }
+
 
     renderNews();
 
@@ -462,6 +495,32 @@ function render(json, rerender = false) {
     renderMention(Mention7Chart, mention.days, 'mention')
     renderMention(Mention, mention.hours)
     renderMobileAsideBtns(MobileAsideBlogBtns, list)
+
+    window.removeEventListener('scroll', (list) => ScrollHandler(Object.keys(list)))
+    window.addEventListener('scroll', (list) => ScrollHandler(Object.keys(list)));
+
+    function ScrollHandler(ks) {
+        last_known_scroll_position = window.scrollY;
+        const url = new URL(document.URL)
+        const currentPost = ks.includes(url.searchParams.get('posts')) ? url.searchParams.get('posts') : 'all'
+        if (!ticking) {
+            window.requestAnimationFrame(function () {
+                getVerticalScrollPercentage(document.body, currentPost)
+                ticking = false;
+            });
+
+            ticking = true;
+        }
+    }
+
+    function getVerticalScrollPercentage(elm, currentPost) {
+        const p = elm.parentNode
+        const precent = Math.round((elm.scrollTop || p.scrollTop) / (p.scrollHeight - p.clientHeight) * 100)
+        if (precent > 80) {
+            console.log(precent, currentPost)
+            paginate(currentPost)
+        }
+    }
 }
 
 function renderMobileCheckboxes(node, settings, title, lang, what) {
@@ -556,9 +615,9 @@ function logicCheckboxes(node, type, value) {
     if (type === 'allOn') {
         const all = node.parentElement.parentElement.parentElement.querySelectorAll('input')
         for (let j = 0; j < all.length; j++) {
-            if(all[j].value!==value){
+            if (all[j].value !== value) {
                 all[j].checked = true
-            }else{
+            } else {
                 all[j].checked = false
             }
         }
@@ -623,7 +682,7 @@ function renderTableDate(table, query, lang) {
         return
     }
     //Таблица
-    table.innerHTML+='<tbody>'
+    table.innerHTML += '<tbody>'
     if (json[query].length) {
         json[query].forEach((row) => {
             const newRow = table.insertRow(-1);
@@ -666,7 +725,7 @@ function renderTableDate(table, query, lang) {
             table.appendChild(spacing);
 
         });
-        table.innerHTML+='</tbody>'
+        table.innerHTML += '</tbody>'
     } else {
         table.parentElement.remove();
     }
@@ -758,4 +817,11 @@ for (let i = 0; i < charts.length; i++) {
     charts[i].addEventListener('pointerout', function () {
         this.classList.remove('active');
     });
+
 }
+
+let last_known_scroll_position = 0;
+let ticking = false;
+
+
+
