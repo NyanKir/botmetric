@@ -214,6 +214,7 @@ function render(json, rerender = false) {
         let max = Math.max(...arrMentionSource.map((el) => el.value));
         arrMentionSource.forEach((mention) => {
             if (!mention.value) {
+                // MentionResource.parentElement.classList.add('display-none')
                 return;
             }
             let progress = ((100 * mention.value) / max.toFixed(0));
@@ -678,9 +679,12 @@ function renderTableDate(table, query, lang) {
     }
 
     if (!json[query]) {
-        table.parentElement.remove();
+        table.parentElement.classList.add('display-none')
+        table.parentElement.classList.remove('display-block')
         return
     }
+    table.parentElement.classList.add('display-block')
+    table.parentElement.classList.remove('display-none')
     //Таблица
     table.innerHTML += '<tbody>'
     if (json[query].length) {
@@ -727,7 +731,8 @@ function renderTableDate(table, query, lang) {
         });
         table.innerHTML += '</tbody>'
     } else {
-        table.parentElement.remove();
+        table.parentElement.classList.remove('display-block')
+        table.parentElement.classList.add('display-none')
     }
 }
 

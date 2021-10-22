@@ -9,6 +9,12 @@
     --graytitle: #8c8c99;
 }
 
+.display-none{
+    display: none!important;
+}
+.display-block{
+    display: block!important;
+}
 /*Base Start*/
 * {
     font-family: 'Open Sans', sans-serif;
@@ -928,7 +934,7 @@ button {
 }
 
 .mobile-popup.active {
-    bottom: 0px;
+    bottom: -1px;
 }
 
 .mobile-popup span {
@@ -1361,7 +1367,7 @@ input:checked + .slider:before {
         top: 70px;
     }
     .resource-switcher{
-        display: none;
+        display: none!important;
     }
     .resource {
         display: block;
