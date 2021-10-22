@@ -611,9 +611,11 @@ function renderTableDate(table, query, lang) {
     }
 
     if (!json[query]) {
+        table.parentElement.remove();
         return
     }
     //Таблица
+    table.innerHTML+='<tbody>'
     if (json[query].length) {
         json[query].forEach((row) => {
             const newRow = table.insertRow(-1);
@@ -656,6 +658,7 @@ function renderTableDate(table, query, lang) {
             table.appendChild(spacing);
 
         });
+        table.innerHTML+='</tbody>'
     } else {
         table.parentElement.remove();
     }
