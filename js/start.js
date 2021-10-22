@@ -288,7 +288,6 @@ function render(json, rerender = false) {
     }
 
     function renderBlogBtns(node, list) {
-        console.log(list)
         const keys = Object.keys(list).filter((el) => list[el].length !== 0)
         const url = new URL(document.URL)
         const ks = Object.keys(list)
@@ -399,7 +398,6 @@ function render(json, rerender = false) {
     }
 
     function renderNews() {
-        console.log('rer')
         Notices.innerHTML = '';
         const url = new URL(document.URL)
         const ks = Object.keys(list)
@@ -524,10 +522,46 @@ function render(json, rerender = false) {
         const p = elm.parentNode
         const precent = Math.round((elm.scrollTop || p.scrollTop) / (p.scrollHeight - p.clientHeight) * 100)
         if (precent > 80) {
-            console.log(precent, currentPost)
             paginate(currentPost)
         }
     }
+
+    function renderMention(node, mention, title) {
+        if (keyword.length > 20 && keyword.length < 25) {
+            Keyword.style.fontSize = '14px';
+        }
+        if (keyword.length > 25) {
+            Keyword.style.fontSize = '13px';
+        }
+        if (mention.every((el) => el === 0)) {
+            node.parentElement.style.display = 'none';
+        } else {
+            node.parentElement.style.display = 'block';
+            let max = Math.max(...mention);
+
+            const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
+            mention.forEach((hour, index, arr) => {
+                let progress = +(((100 * hour) / max).toFixed(0))
+                if (progress < 40 && progress !== 0) {
+                    progress += 10
+                }
+
+                node.innerHTML += `
+                    <div class="mention_wrapper">
+                    ${
+                    title ? `<span class="mention_hour">${days[index]}</span>` :
+                        `<span class="mention_hour">${index}:00</span>`
+                }
+                        <div class="mention_progress">
+                            <div class="mention_count" style="height:${progress}% "><span>${hour ? hour : ''}</span></div>
+                        </div>
+                    </div>
+`;
+
+            });
+        }
+    }
+
 }
 
 function renderMobileCheckboxes(node, settings, title, lang, what) {
@@ -742,41 +776,6 @@ function renderTableDate(table, query, lang) {
     }
 }
 
-function renderMention(node, mention, title) {
-    if (keyword.length > 20 && keyword.length < 25) {
-        Keyword.style.fontSize = '14px';
-    }
-    if (keyword.length > 25) {
-        Keyword.style.fontSize = '13px';
-    }
-    if (mention.every((el) => el === 0)) {
-        node.parentElement.style.display = 'none';
-    } else {
-        node.parentElement.style.display = 'block';
-        let max = Math.max(...mention);
-
-        const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
-        mention.forEach((hour, index, arr) => {
-            let progress = +(((100 * hour) / max).toFixed(0))
-            if (progress < 40 && progress !== 0) {
-                progress += 10
-            }
-
-            node.innerHTML += `
-                    <div class="mention_wrapper">
-                    ${
-                title ? `<span class="mention_hour">${days[index]}</span>` :
-                    `<span class="mention_hour">${index}:00</span>`
-            }
-                        <div class="mention_progress">
-                            <div class="mention_count" style="height:${progress}% "><span>${hour ? hour : ''}</span></div>
-                        </div>
-                    </div>
-`;
-
-        });
-    }
-}
 
 function scanDataBtnHandler(e, btn, input) {
     btn.disabled = true
