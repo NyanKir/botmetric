@@ -15,10 +15,14 @@ function render(json, rerender = false) {
         linkshash[i].textContent = 'media_scan_bot'
     }
 
-    if (!main.authorized) {
+    if (!main.authorized && showPopup) {
         setTimeout(() => {
             MobilePopup.classList.add('active')
         }, 1000)
+        MobilePopup.addEventListener(('click'),function () {
+            showPopup=false
+            MobilePopup.remove()
+        })
     }
 
 
