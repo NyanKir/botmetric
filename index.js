@@ -52,8 +52,9 @@ async function fetching(keyword) {
     }
     return json
 }
-
+const url = new URL(document.URL)
+const keyword=url.searchParams.get('q')
 const letters=['Bitcoin','Tesla','Илон Маск','Криптовалюты','Covid']
 const num=Math.floor(Math.random() * 4)
-fetching(letters[num]).then((data)=>render(data,true))
+fetching(keyword?keyword:letters[num]).then((data)=>render(data,true))
 

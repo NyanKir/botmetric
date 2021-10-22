@@ -781,6 +781,10 @@ function renderMention(node, mention, title) {
 function scanDataBtnHandler(e, btn, input) {
     btn.disabled = true
     document.title = 'Loading...'
+    const url = new URL(document.URL)
+    url.searchParams.set('q', input.value)
+    // window.scrollTo({ top: Notices.offsetTop-90, behavior: 'smooth'});
+    window.history.replaceState({}, null, url.toString());
     fetching(input.value).then((data) => render(data)).then(() => {
         document.title = 'Dashboard Media Scan'
         btn.disabled = false
