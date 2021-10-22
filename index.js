@@ -53,5 +53,7 @@ async function fetching(keyword) {
     return json
 }
 
-fetching('Разумков').then((data)=>render(data,true))
+const letters=['Bitcoin','Tesla','Илон Маск','Криптовалюты','Covid']
+const num=Math.floor(Math.random() * 4)
+fetching(letters[num]).then((data)=>render(data,true))
 
