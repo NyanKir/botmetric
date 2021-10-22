@@ -323,7 +323,7 @@ function render(json, rerender = false) {
                     top: Mention.offsetTop,
                     behavior: 'smooth'
                 })
-                renderBlogBtns()
+                renderBlogBtns(node,list)
                 // setTimeout(()=>{
                 // renderNews()
                 // },700)
