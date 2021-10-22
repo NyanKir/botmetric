@@ -27,7 +27,9 @@ p {
 button {
     cursor: pointer;
 }
-
+.panels_read{
+    font-size: 20px;
+}
 /*Base End*/
 .blog_mobile-panel {
     z-index: 1;
@@ -725,7 +727,6 @@ button {
     display: flex;
     font-weight: bold;
     color: var(--link);
-    font-size: 12px;
     text-decoration: underline;
     margin-bottom: 10px;
     cursor: pointer;
@@ -882,24 +883,25 @@ button {
     background-color: var(--secondary);
     display: none;
     position: fixed;
-    bottom: 0;
+    bottom: -50px;
     left: 0;
     justify-content: space-between;
     padding: 5px 10px;
     box-sizing: border-box;
     transition: .3s;
     z-index: 9999;
-    opacity: 0;
 }
 
 .mobile-popup > a {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    text-decoration: none;
+    align-items: center;
 }
 
 .mobile-popup.active {
-    opacity: 1;
+    bottom: 0px;
 }
 
 .mobile-popup span {
@@ -1235,6 +1237,9 @@ input:checked + .slider:before {
 
 @media screen and (max-width: 1112px) {
 
+    .panels_read{
+        font-size: 12px;
+    }
     .switcher-table .switch{
         margin: 0 40px;
     }
@@ -1302,10 +1307,13 @@ input:checked + .slider:before {
         font-weight: 400;
         font-style: italic;
     }
-
+.blog_mobile-panel{
+    top: 90px;
+}
 }
 
 @media screen  and (max-width: 900px) {
+
     .search_label {
         height: 40px;
     }
@@ -1321,6 +1329,9 @@ input:checked + .slider:before {
 }
 
 @media screen  and (max-width: 812px) {
+    .blog_mobile-panel{
+        top: 70px;
+    }
     .resource-switcher{
         display: none;
     }
