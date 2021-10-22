@@ -13,7 +13,7 @@
     display: none!important;
 }
 .display-block{
-    display: block!important;
+    display: block;
 }
 /*Base Start*/
 * {
@@ -1367,7 +1367,7 @@ input:checked + .slider:before {
         top: 70px;
     }
     .resource-switcher{
-        display: none!important;
+        display: none;
     }
     .resource {
         display: block;
