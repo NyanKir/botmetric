@@ -443,7 +443,7 @@ button {
 }
 
 .mention_progress {
-    height: inherit;
+    height: 100%;
     position: relative;
     border-radius: 100px;
     background-color: var(--secondary);
