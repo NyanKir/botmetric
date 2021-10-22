@@ -535,8 +535,8 @@ function CheckboxHandler(e, self) {
     } else {
         params[type] = params[type].filter((el) => el !== e.target.value)
         if (!params[type].length) {
-            params[type] = [...params[dictType]]
-            logicCheckboxes(self, 'allOn', type)
+            params[type] = [...params[dictType]].filter((el) => el !== e.target.value)
+            logicCheckboxes(self, 'allOn', e.target.value)
             timeout = setTimeout(() => {
                 fetching().then(data => render(data))
             }, time)
@@ -556,7 +556,11 @@ function logicCheckboxes(node, type, value) {
     if (type === 'allOn') {
         const all = node.parentElement.parentElement.parentElement.querySelectorAll('input')
         for (let j = 0; j < all.length; j++) {
-            all[j].checked = true
+            if(all[j].value!==value){
+                all[j].checked = true
+            }else{
+                all[j].checked = false
+            }
         }
         return;
     }
